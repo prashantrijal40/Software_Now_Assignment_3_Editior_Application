@@ -1,3 +1,13 @@
+"""Simple Tkinter-based image editor GUI.
+
+This module provides `ImageEditorApp`, a lightweight Tkinter application
+that wraps `ImageProcessor` operations with a basic UI: open/save, undo/redo,
+and common image transformations (grayscale, blur, edge detection,
+brightness/contrast, rotate, flip, resize).
+
+The GUI expects OpenCV-style BGR numpy arrays from `image_processor`.
+"""
+
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
@@ -8,11 +18,18 @@ from history_manager import HistoryManager
 
 
 class ImageEditorApp:
+    """Main application window for the image editor.
+
+    Args:
+        root (tk.Tk): The Tkinter root window to attach the UI to.
+    """
+
     def __init__(self, root):
         self.root = root
         self.root.title("HIT137 Image Editor")
         self.root.geometry("1000x600")
 
+        # Core components: image processor and undo/redo history
         self.processor = ImageProcessor()
         self.history = HistoryManager()
         self.current_path = None
@@ -21,6 +38,7 @@ class ImageEditorApp:
         self.create_ui()
 
     def create_menu(self):
+        """Create the application menu (File / Edit)."""
         menubar = tk.Menu(self.root)
 
         filemenu = tk.Menu(menubar, tearoff=0)
@@ -40,12 +58,19 @@ class ImageEditorApp:
         self.root.config(menu=menubar)
 
     def create_ui(self):
+        """Build the main UI: image canvas and control panel.
+
+        The left area shows the current image and the right panel exposes
+        transformation controls and sliders.
+        """
         main = tk.Frame(self.root)
         main.pack(fill=tk.BOTH, expand=True)
 
+        # Image display area (uses a Label to hold a PhotoImage)
         self.canvas = tk.Label(main, bg="gray")
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+        # Right-side control panel
         panel = tk.Frame(main, width=200)
         panel.pack(side=tk.RIGHT, fill=tk.Y)
 
@@ -80,17 +105,21 @@ class ImageEditorApp:
     # ---------- Helpers ----------
 
     def check_image(self):
+        """Return True if an image is loaded; otherwise show error and return False."""
         if self.processor.get_image() is None:
             messagebox.showerror("Error", "Please open an image first!")
             return False
         return True
 
     def update_display(self):
+        """Refresh the canvas and status bar to reflect the current image."""
         img = self.processor.get_image()
+        # Convert BGR (OpenCV) -> RGB (Pillow) before creating PhotoImage
         rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         pil = Image.fromarray(rgb)
         tkimg = ImageTk.PhotoImage(pil)
         self.canvas.config(image=tkimg)
+        # keep reference to avoid GC removing the image
         self.canvas.image = tkimg
 
         h, w = img.shape[:2]
@@ -100,15 +129,18 @@ class ImageEditorApp:
     # ---------- File ----------
 
     def open_image(self):
+        """Open an image file and load it into the processor."""
         path = filedialog.askopenfilename(filetypes=[("Images", "*.jpg *.png *.bmp")])
         if path:
             img = cv2.imread(path)
             self.processor.set_image(img)
             self.current_path = path
+            # reset history when a new file is opened
             self.history = HistoryManager()
             self.update_display()
 
     def save_image(self):
+        """Save the current image to the existing path (if any)."""
         if not self.check_image():
             return
         if self.current_path:
@@ -116,6 +148,7 @@ class ImageEditorApp:
             messagebox.showinfo("Saved", "Image saved!")
 
     def save_as(self):
+        """Save the current image to a user-selected path."""
         if not self.check_image():
             return
         path = filedialog.asksaveasfilename(defaultextension=".jpg")
@@ -125,11 +158,13 @@ class ImageEditorApp:
     # ---------- Undo / Redo ----------
 
     def undo(self):
+        """Undo the last operation using `HistoryManager`."""
         if self.check_image():
             self.processor.set_image(self.history.undo(self.processor.get_image()))
             self.update_display()
 
     def redo(self):
+        """Redo the last undone operation using `HistoryManager`."""
         if self.check_image():
             self.processor.set_image(self.history.redo(self.processor.get_image()))
             self.update_display()
@@ -137,17 +172,45 @@ class ImageEditorApp:
     # ---------- Actions ----------
 
     def apply(self, func):
+        """Helper that pushes current state to history, applies `func`, updates UI.
+
+        `func` is expected to be a callable that mutates `self.processor.image`.
+        """
         if not self.check_image():
             return
         self.history.push(self.processor.get_image())
         func()
         self.update_display()
+    # ---------- Action wrappers (connected to UI controls) ----------
+    # Each small wrapper calls `apply` with the appropriate processor method.
+    def do_grayscale(self):
+        """Apply grayscale to the current image."""
+        self.apply(self.processor.grayscale)
 
-    def do_grayscale(self): self.apply(self.processor.grayscale)
-    def do_edge(self): self.apply(self.processor.edge_detect)
-    def do_rotate(self, a): self.apply(lambda: self.processor.rotate(a))
-    def do_flip(self, m): self.apply(lambda: self.processor.flip(m))
-    def do_resize(self, s): self.apply(lambda: self.processor.resize(s))
-    def do_blur(self, v): self.apply(lambda: self.processor.blur(int(v)))
-    def do_brightness(self, v): self.apply(lambda: self.processor.brightness(int(v)))
-    def do_contrast(self, v): self.apply(lambda: self.processor.contrast(float(v)))
+    def do_edge(self):
+        """Apply edge detection to the current image."""
+        self.apply(self.processor.edge_detect)
+
+    def do_rotate(self, a):
+        """Rotate the image by angle `a` (90/180/270)."""
+        self.apply(lambda: self.processor.rotate(a))
+
+    def do_flip(self, m):
+        """Flip the image horizontally ('h') or vertically (other)."""
+        self.apply(lambda: self.processor.flip(m))
+
+    def do_resize(self, s):
+        """Resize the image by scale factor `s`."""
+        self.apply(lambda: self.processor.resize(s))
+
+    def do_blur(self, v):
+        """Blur with kernel size taken from slider value `v`."""
+        self.apply(lambda: self.processor.blur(int(v)))
+
+    def do_brightness(self, v):
+        """Adjust brightness using slider value `v`."""
+        self.apply(lambda: self.processor.brightness(int(v)))
+
+    def do_contrast(self, v):
+        """Adjust contrast using slider value `v`."""
+        self.apply(lambda: self.processor.contrast(float(v)))
