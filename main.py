@@ -7,5 +7,5 @@ import tkinter as tk
 # start the application only when this file is run directly
 if __name__ == "__main__":
     root = tk.Tk()                #create main window
-    app = ImageEditorApp(root)    #load the image editor into the window
+    app = ImageEditorApp(root)    #loading the image editor into the window
     root.mainloop()               # run the GUI Loop
