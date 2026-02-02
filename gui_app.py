@@ -76,7 +76,11 @@ class ImageEditorApp:
 
         tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X)
         tk.Button(panel, text="Edge Detection", command=self.do_edge).pack(fill=tk.X)
-
+        '''Create a slider to control image contrast
+        from_=1 to 5: range of contrast values
+        resolution=0.1: slider moves in steps of 0.1
+        orient=tk.HORIZONTAL: horizontal slider
+        command=self.do_contrast: function called when slider value changes'''
         tk.Label(panel, text="Blur").pack()
         self.blur_slider = tk.Scale(panel, from_=1, to=31, orient=tk.HORIZONTAL, command=self.do_blur)
         self.blur_slider.pack(fill=tk.X)
