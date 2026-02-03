@@ -26,6 +26,7 @@ class ImageProcessor:
     def __init__(self):
         """Create a new ImageProcessor with no image loaded."""
         self.image = None
+        self.original = None
 
     def set_image(self, img):
         """Set the current image.
