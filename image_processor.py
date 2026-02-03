@@ -35,6 +35,7 @@ class ImageProcessor:
             img (np.ndarray): Image array in BGR color order.
         """
         self.image = img
+        self.original = self.image.copy()
 
     def get_image(self):
         """Return the current image (may be None)."""
