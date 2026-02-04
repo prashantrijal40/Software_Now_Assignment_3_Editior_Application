@@ -61,7 +61,7 @@ class ImageProcessor:
         self.image = cv2.GaussianBlur(self.image, (k, k), 0)
 
     def edge_detect(self):
-        """Detect edges using the Canny algorithm and store as BGR image.
+        """Detecting edges using the Canny algorithm and store as BGR image.
 
         The Canny output is a single-channel binary edge map; we convert it
         back to BGR so the processor consistently exposes 3-channel images.
