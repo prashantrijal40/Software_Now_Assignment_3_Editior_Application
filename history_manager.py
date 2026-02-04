@@ -3,7 +3,7 @@ class HistoryManager:
         self.undo_stack = []
         self.redo_stack = []
 
-    def push(self, image):
+    def push(self, image): # Definining the function push
         if image is not None:
             self.undo_stack.append(image.copy())
             self.redo_stack.clear()
