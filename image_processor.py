@@ -26,7 +26,6 @@ class ImageProcessor:
     def __init__(self):
         """Create a new ImageProcessor with no image loaded."""
         self.image = None
-        self.original = None
 
     def set_image(self, img):
         """Set the current image.
@@ -35,7 +34,6 @@ class ImageProcessor:
             img (np.ndarray): Image array in BGR color order.
         """
         self.image = img
-        self.original = self.image.copy()
 
     def get_image(self):
         """Return the current image (may be None)."""
