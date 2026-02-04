@@ -15,7 +15,7 @@ class HistoryManager:
         self.undo_stack = []
         # Stack to store undone image states for redo operations
         self.redo_stack = []
-
+    # Define the push function to save a new image state
     def push(self, image):
         """
         Push a copy of the current image state onto the undo stack.
@@ -27,13 +27,13 @@ class HistoryManager:
             image: The image object to store. Must have a copy() method.
                    If None, the operation is skipped.
         """
-        # Only push if image is not None
+        # Check if the image is not empty
         if image is not None:
-            # Add a copy of the current image to the undo stack
+            # Save a copy of the image to the undo stack
             self.undo_stack.append(image.copy())
-            # Clear the redo stack since a new edit invalidates redo history
+            # Clear the redo stack because a new action was performed
             self.redo_stack.clear()
-
+    # Define the undo function to restore the previous image state
     def undo(self, current):
         """
         Undo the last operation by reverting to the previous image state.
