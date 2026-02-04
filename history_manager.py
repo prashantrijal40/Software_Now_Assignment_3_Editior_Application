@@ -1,5 +1,8 @@
+# Define a class to manage undo and redo operations for images
 class HistoryManager:
+     # Constructor method, called when a HistoryManager object is created
     def __init__(self):
+        # Stack to store previous, undone image states
         self.undo_stack = []
         self.redo_stack = []
 
