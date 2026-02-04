@@ -1,24 +1,81 @@
 # Define a class to manage undo and redo operations for images
 class HistoryManager:
-     # Constructor method, called when a HistoryManager object is created
+    """
+    Manages undo/redo functionality for image editing operations.
+    
+    This class maintains two stacks to track image states:
+    - undo_stack: stores previous states for undo operations
+    - redo_stack: stores undone states for redo operations
+    """
+    
+    # Constructor method, called when a HistoryManager object is created
     def __init__(self):
-        # Stack to store previous, undone image states
+        """Initialize the HistoryManager with empty undo and redo stacks."""
+        # Stack to store previous image states for undo operations
         self.undo_stack = []
+        # Stack to store undone image states for redo operations
         self.redo_stack = []
 
-    def push(self, image): # Definining the function push
+    def push(self, image):
+        """
+        Push a copy of the current image state onto the undo stack.
+        
+        This is called when a new edit is made to the image.
+        Clears the redo stack since a new edit invalidates redo history.
+        
+        Args:
+            image: The image object to store. Must have a copy() method.
+                   If None, the operation is skipped.
+        """
+        # Only push if image is not None
         if image is not None:
+            # Add a copy of the current image to the undo stack
             self.undo_stack.append(image.copy())
+            # Clear the redo stack since a new edit invalidates redo history
             self.redo_stack.clear()
 
     def undo(self, current):
+        """
+        Undo the last operation by reverting to the previous image state.
+        
+        Retrieves the previous state from the undo stack and saves the
+        current state to the redo stack for potential redo operation.
+        
+        Args:
+            current: The current image state to save in redo_stack.
+        
+        Returns:
+            The previous image state from undo_stack, or current if 
+            undo_stack is empty (no undo history available).
+        """
+        # Check if there are states available to undo
         if self.undo_stack:
+            # Push current state to redo stack so it can be redone later
             self.redo_stack.append(current.copy())
+            # Return the previous state from undo stack
             return self.undo_stack.pop()
+        # If undo stack is empty, return current state unchanged
         return current
 
     def redo(self, current):
+        """
+        Redo the last undone operation by restoring a previously undone state.
+        
+        Retrieves a state from the redo stack and saves the current state
+        to the undo stack to maintain undo history.
+        
+        Args:
+            current: The current image state to save in undo_stack.
+        
+        Returns:
+            The next image state from redo_stack, or current if redo_stack 
+            is empty (no redo history available).
+        """
+        # Check if there are states available to redo
         if self.redo_stack:
+            # Push current state to undo stack to maintain undo history
             self.undo_stack.append(current.copy())
+            # Return the redone state from redo stack
             return self.redo_stack.pop()
+        # If redo stack is empty, return current state unchanged
         return current
