@@ -42,10 +42,8 @@ class HistoryManager:
         
         Retrieves the previous state from the undo stack and saves the
         current state to the redo stack for potential redo operation.
-        
         Args:
             current: The current image state to save in redo_stack.
-        
         Returns:
             The previous image state from undo_stack, or current if 
             undo_stack is empty (no undo history available).
@@ -62,10 +60,8 @@ class HistoryManager:
     def redo(self, current):
         """
         Redo the last undone operation by restoring a previously undone state.
-        
         Retrieves a state from the redo stack and saves the current state
         to the undo stack to maintain undo history.
-        
         Args:
             current: The current image state to save in undo_stack.
         
