@@ -8,6 +8,9 @@ window and application event loop.
 Attributes used in this module:
     ImageEditorApp: The main GUI application class from gui_app module.
     tk: tkinter library for creating the GUI window.
+    
+    Before running this module, ensure that the gui_app.py, image_processor.py and history_manager.py files are in the same directory
+    and that the required libraries from the requirement.txt are installed.
 """
 
 # Import the ImageEditorApp class from gui_app.py
