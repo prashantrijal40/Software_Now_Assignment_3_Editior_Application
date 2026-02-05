@@ -154,6 +154,9 @@ class ImageEditorApp:
         # Status bar at the bottom: displays file name and image dimensions
         self.status = tk.Label(self.root, text="No image loaded", bd=1, relief=tk.SUNKEN, anchor=tk.W)
         self.status.pack(side=tk.BOTTOM, fill=tk.X)
+        
+        tk.Button(panel, text="Undo", command=self.undo).pack(fill=tk.X, padx=5, pady=2)
+        tk.Button(panel, text="Redo", command=self.redo).pack(fill=tk.X, padx=5, pady=2)
 
         tk.Button(panel, text="RESET TO ORIGINAL", command=self.reset_image).pack(fill=tk.X, padx=5, pady=5)
     # ---------- Helpers ----------
@@ -456,12 +459,7 @@ class ImageEditorApp:
         # Restore to original and apply current brightness value
         self.processor.set_image(self.original_for_sliders.copy())
         self.processor.brightness(int(v))
-        self.update_display()
-        
-        
-        
-        
-        
+        self.update_display()  
         
     def reset_image(self):
         if self.original_image is not None:
