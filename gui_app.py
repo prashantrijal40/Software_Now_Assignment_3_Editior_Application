@@ -20,15 +20,12 @@ from history_manager import HistoryManager
 class ImageEditorApp:
     """
     Main application window for the image editor.
-
     Args:
         root (tk.Tk): The Tkinter root window to attach the UI to.
     """
-
     def __init__(self, root):
         """
         Initialize the ImageEditorApp with the main window.
-        
         Args:
             root (tk.Tk): The Tkinter root window to attach the UI to.
         """
@@ -38,6 +35,7 @@ class ImageEditorApp:
         self.root.title("HIT137 Image Editor")
         # To set initial window size (width x height)
         self.root.geometry("1000x600")
+
 
         # Core components: image processor and undo/redo history
         # ImageProcessor handles all image transformations
