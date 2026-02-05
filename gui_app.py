@@ -34,7 +34,8 @@ class ImageEditorApp:
         # To set window title
         self.root.title("HIT137 Image Editor")
         # To set initial window size (width x height)
-        self.root.geometry("1000x600")
+        self.root.geometry("1400x900")
+        self.root.configure(bg="#2b2b2b")
 
 
         # Core components: image processor and undo/redo history
