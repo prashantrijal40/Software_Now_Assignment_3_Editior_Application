@@ -15,18 +15,18 @@ Notes
 import cv2
 import numpy as np
 
-
+# Define a class for image processing operations
 class ImageProcessor:
     """Container for an image and simple OpenCV-based operations.
 
     Attributes:
         image (np.ndarray|None): Current image in BGR format or None.
     """
-
+    # Constructor method, called when an ImageProcessor object is created
     def __init__(self):
         """Create a new ImageProcessor with no image loaded."""
         self.image = None
-
+    # Method to set (assign) an image to the object
     def set_image(self, img):
         """Set the current image.
 
@@ -34,11 +34,11 @@ class ImageProcessor:
             img (np.ndarray): Image array in BGR color order.
         """
         self.image = img
-
+    # Method to get (return) the current image
     def get_image(self):
         """Return the current image (may be None)."""
         return self.image
-
+    # Method to convert the image to grayscale
     def grayscale(self):
         """Convert the current image to grayscale and keep it in BGR shape.
 
