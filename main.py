@@ -1,11 +1,21 @@
-#import the ImageEditorApp class that contains all GUI features of the editor
-from gui_app import ImageEditorApp
+"""
+Main entry point for the Image Editor Application.
 
-#import tkinter library to create the window and handle GUI
+This module initializes and launches the Image Editor GUI application using tkinter.
+It imports the ImageEditorApp class from the gui_app module and sets up the main
+window and application event loop.
+
+Attributes:
+    ImageEditorApp: The main GUI application class from gui_app module.
+    tk: tkinter library for creating the GUI window.
+"""
+
+from gui_app import ImageEditorApp
 import tkinter as tk
 
-# start the application only when this file is run directly
+
 if __name__ == "__main__":
-    root = tk.Tk()                #create main window
-    app = ImageEditorApp(root)    #loading the image editor into the window
-    root.mainloop()               # run the GUI Loop
+    """Initialize and run the Image Editor application."""
+    root = tk.Tk()
+    app = ImageEditorApp(root)
+    root.mainloop()
