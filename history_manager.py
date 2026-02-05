@@ -16,7 +16,7 @@ class HistoryManager:
         # Stack to store undone image states for redo operations
         self.redo_stack = []
 
-    # Save the current image state before making changes
+    # Before making changes save the current image state
     # This allows us to undo later
     def push(self, image):
         """
