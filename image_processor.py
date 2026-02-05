@@ -62,7 +62,8 @@ class ImageProcessor:
             k += 1
         # (k, k) must be odd for GaussianBlur
         self.image = cv2.GaussianBlur(self.image, (k, k), 0)
-
+    
+    # Method to detect edges in the image
     def edge_detect(self):
         """
         Detecting edges using the Canny algorithm and store as BGR image.
@@ -70,10 +71,11 @@ class ImageProcessor:
         The Canny output is a single-channel binary edge map; we convert it
         back to BGR so the processor consistently exposes 3-channel images.
         """
+        # Convert the image from BGR to grayscal
         gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, 100, 200)
         self.image = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
-
+    # Method to adjust the brightness of the image
     def brightness(self, value):
         """
         Adjust image brightness by adding `value` to pixel intensities.
@@ -82,7 +84,7 @@ class ImageProcessor:
             value (int): Value added to each pixel (positive -> brighter).
         """
         self.image = cv2.convertScaleAbs(self.image, alpha=1, beta=value)
-
+    # Method to adjust the contrast of the image
     def contrast(self, value): #need to fix this
         """
         Adjust image contrast by scaling pixel intensities.
