@@ -118,3 +118,13 @@ class ImageProcessor:
         """
         h, w = self.image.shape[:2]
         self.image = cv2.resize(self.image, (int(w * scale), int(h * scale)))
+        
+    def reset(self, original_img):
+        """
+        Replaces the current image with a fresh copy of the original.
+        
+        Args:
+            original_img (np.ndarray): The backup copy of the original image.
+        """
+        if original_img is not None:
+            self.image = original_img.copy()

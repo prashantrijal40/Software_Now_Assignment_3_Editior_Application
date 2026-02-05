@@ -47,6 +47,8 @@ class ImageEditorApp:
         # Track the current file path for save operations
         self.current_path = None
         
+        self.original_image = None  # Add this to store the very first version
+        
         # Track original image state before slider adjustments
         # This allows us to apply slider-based transformations without creating multiple history entries
         self.original_for_sliders = None
@@ -113,6 +115,8 @@ class ImageEditorApp:
         panel = tk.Frame(main, width=200, bg="lightgray")
         panel.pack(side=tk.RIGHT, fill=tk.Y)
         panel.pack_propagate(False)  # Prevent frame from shrinking
+        
+        
 
         # Transformation buttons: Grayscale and Edge Detection
         tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X, padx=5, pady=2)
@@ -153,6 +157,7 @@ class ImageEditorApp:
         self.status = tk.Label(self.root, text="No image loaded", bd=1, relief=tk.SUNKEN, anchor=tk.W)
         self.status.pack(side=tk.BOTTOM, fill=tk.X)
 
+        tk.Button(panel, text="RESET TO ORIGINAL", command=self.reset_image).pack(fill=tk.X, padx=5, pady=5)
     # ---------- Helpers ----------
 
     def check_image(self):
@@ -237,6 +242,9 @@ class ImageEditorApp:
             # Load the image into the processor
             self.processor.set_image(img)
             # Store the file path for future save operations
+            
+            self.original_image = img.copy()  # Save the original image for slider resets
+            
             self.current_path = path
             # Reset slider state tracking when a new image is opened
             self.original_for_sliders = None
@@ -451,6 +459,29 @@ class ImageEditorApp:
         self.processor.set_image(self.original_for_sliders.copy())
         self.processor.brightness(int(v))
         self.update_display()
+        
+        
+        
+        
+        
+        
+    def reset_image(self):
+        if self.original_image is not None:
+        # Save current state to history before resetting (optional, but helpful)
+           self.history.push(self.processor.get_image())
+        
+        # Restore the original image
+           self.processor.set_image(self.original_image.copy())
+        
+        # Reset slider variables and tracking
+           self.original_for_sliders = None
+           self.blur_slider.set(1)
+           self.brightness_slider.set(0)
+           self.contrast_slider.set(1.0)
+        
+           self.update_display()
+        else:
+           messagebox.showwarning("Warning", "No original image to reset to!")   
 
     def do_contrast(self, v):
         """
