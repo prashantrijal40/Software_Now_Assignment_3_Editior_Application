@@ -21,10 +21,8 @@ class HistoryManager:
     def push(self, image):
         """
         Push a copy of the current image state onto the undo stack.
-        
         This is called when a new edit is made to the image.
         Clears the redo stack since a new edit invalidates redo history.
-        
         Args:
             image: The image object to store. Must have a copy() method.
                    If None, the operation is skipped.
@@ -35,6 +33,7 @@ class HistoryManager:
             self.undo_stack.append(image.copy())
             # Clear the redo stack because a new action was performed
             self.redo_stack.clear()
+
     # To define the undo function to restore the previous image state
     def undo(self, current):
         """
@@ -56,6 +55,7 @@ class HistoryManager:
             return self.undo_stack.pop()
         # If undo stack is empty, return current state unchanged
         return current
+    
     # To define the redo function to reapply an undone image state
     def redo(self, current):
         """
@@ -64,7 +64,6 @@ class HistoryManager:
         to the undo stack to maintain undo history.
         Args:
             current: The current image state to save in undo_stack.
-        
         Returns:
             The next image state from redo_stack, or current if redo_stack 
             is empty (no redo history available).
@@ -75,6 +74,5 @@ class HistoryManager:
             self.undo_stack.append(current.copy())
             # Return the redone state from redo stack
             return self.redo_stack.pop()
-
         # If nothing to redo, return current unchanged
         return current
