@@ -29,13 +29,13 @@ class HistoryManager:
             image: The image object to store. Must have a copy() method.
                    If None, the operation is skipped.
         """
-        # Check if the image is not empty
+        # To check if the image is not empty
         if image is not None:
             # Save a copy of the image to the undo stack
             self.undo_stack.append(image.copy())
             # Clear the redo stack because a new action was performed
             self.redo_stack.clear()
-    # Define the undo function to restore the previous image state
+    # To define the undo function to restore the previous image state
     def undo(self, current):
         """
         Undo the last operation by reverting to the previous image state.
@@ -50,7 +50,7 @@ class HistoryManager:
             The previous image state from undo_stack, or current if 
             undo_stack is empty (no undo history available).
         """
-        # Check if there are states available to undo
+        # To check if there are states available to undo
         if self.undo_stack:
             # Push current state to redo stack so it can be redone later
             self.redo_stack.append(current.copy())
@@ -58,7 +58,7 @@ class HistoryManager:
             return self.undo_stack.pop()
         # If undo stack is empty, return current state unchanged
         return current
-    # Define the redo function to reapply an undone image state
+    # To define the redo function to reapply an undone image state
     def redo(self, current):
         """
         Redo the last undone operation by restoring a previously undone state.
@@ -73,7 +73,7 @@ class HistoryManager:
             The next image state from redo_stack, or current if redo_stack 
             is empty (no redo history available).
         """
-        # Check if there are states available to redo
+        # To check if there are states available to redo
         if self.redo_stack:
             # Push current state to undo stack to maintain undo history
             self.undo_stack.append(current.copy())
