@@ -102,7 +102,7 @@ class ImageEditorApp:
 
         # Image display area (uses a Label to hold a PhotoImage)
         # The canvas shows the currently loaded/edited image
-        self.canvas = tk.Label(main, bg="gray")
+        self.canvas = tk.Label(main, bg="gray", text="No image loaded", fg="white", font=("Arial", 20))
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
         # Store canvas width and height for image scaling (updated when window is resized)
@@ -111,55 +111,55 @@ class ImageEditorApp:
 
         # Right-side control panel containing transformation buttons and sliders
         # Use pack_propagate(False) to prevent the frame from shrinking below width=200
-        panel = tk.Frame(main, width=200, bg="lightgray")
+        panel = tk.Frame(main, width=280, bg="#e0e0e0")
         panel.pack(side=tk.RIGHT, fill=tk.Y)
         panel.pack_propagate(False)  # Prevent frame from shrinking
         
+        tk.Label(panel, text="Editor", font=("Arial", 20, "bold"), bg="#4e50ab", fg="white").pack(pady=10)
         
 
         # Transformation buttons: Grayscale and Edge Detection
-        tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Edge Detection", command=self.do_edge).pack(fill=tk.X, padx=5, pady=2)
+        tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X, padx=10, pady=10)
+        tk.Button(panel, text="Edge Detection", command=self.do_edge).pack(fill=tk.X, padx=10, pady=10)
         
-        # Blur slider control
+        # Blur slider contro
         # Range: 1 to 31 (must be odd for kernel size)
-        tk.Label(panel, text="Blur", bg="lightgray").pack(padx=5, pady=(10, 2))
+        tk.Label(panel, text="Blur", bg="black").pack(padx=5, pady=(10, 5))
         self.blur_slider = tk.Scale(panel, from_=1, to=31, orient=tk.HORIZONTAL, command=self.do_blur)
-        self.blur_slider.pack(fill=tk.X, padx=5)
+        self.blur_slider.pack(fill=tk.X, padx=10)
 
         # Brightness slider control
         # Range: -100 to 100 for darker to brighter adjustments
-        tk.Label(panel, text="Brightness", bg="lightgray").pack(padx=5, pady=(10, 2))
+        tk.Label(panel, text="Brightness", bg="black").pack(padx=5, pady=(10, 5))
         self.brightness_slider = tk.Scale(panel, from_=-100, to=100, orient=tk.HORIZONTAL, command=self.do_brightness)
-        self.brightness_slider.pack(fill=tk.X, padx=5)
+        self.brightness_slider.pack(fill=tk.X, padx=10)
 
         # Contrast slider control
         # Range: 1.0 to 5.0 in steps of 0.1 for contrast adjustment
-        tk.Label(panel, text="Contrast", bg="lightgray").pack(padx=5, pady=(10, 2))
+        tk.Label(panel, text="Contrast", bg="black").pack(padx=5, pady=(10, 5))
         self.contrast_slider = tk.Scale(panel, from_=1, to=5, resolution=0.1, orient=tk.HORIZONTAL, command=self.do_contrast)
-        self.contrast_slider.pack(fill=tk.X, padx=5)
+        self.contrast_slider.pack(fill=tk.X, padx=10)
 
         # Rotation buttons: 90, 180, 270 degrees
-        tk.Button(panel, text="Rotate 90", command=lambda: self.do_rotate(90)).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Rotate 180", command=lambda: self.do_rotate(180)).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Rotate 270", command=lambda: self.do_rotate(270)).pack(fill=tk.X, padx=5, pady=2)
+        tk.Button(panel, text="Rotate 90", command=lambda: self.do_rotate(90)).pack(fill=tk.X, padx=10, pady=2)
+        tk.Button(panel, text="Rotate 180", command=lambda: self.do_rotate(180)).pack(fill=tk.X, padx=10, pady=2)
+        tk.Button(panel, text="Rotate 270", command=lambda: self.do_rotate(270)).pack(fill=tk.X, padx=10, pady=2)
 
         # Flip buttons: horizontal and vertical flipping
-        tk.Button(panel, text="Flip Horizontal", command=lambda: self.do_flip("h")).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Flip Vertical", command=lambda: self.do_flip("v")).pack(fill=tk.X, padx=5, pady=2)
-
+        tk.Button(panel, text="Flip Horizontal", command=lambda: self.do_flip("h")).pack(fill=tk.X, padx=10, pady=2)
+        tk.Button(panel, text="Flip Vertical", command=lambda: self.do_flip("v")).pack(fill=tk.X, padx=10, pady=2)
         # Resize buttons: scale by 0.5x and 1.5x factors
-        tk.Button(panel, text="Resize 50%", command=lambda: self.do_resize(0.5)).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Resize 150%", command=lambda: self.do_resize(1.5)).pack(fill=tk.X, padx=5, pady=2)
+        tk.Button(panel, text="Resize 50%", command=lambda: self.do_resize(0.5)).pack(fill=tk.X, padx=10, pady=2)
+        tk.Button(panel, text="Resize 150%", command=lambda: self.do_resize(1.5)).pack(fill=tk.X, padx=10, pady=2)
 
         # Status bar at the bottom: displays file name and image dimensions
         self.status = tk.Label(self.root, text="No image loaded", bd=1, relief=tk.SUNKEN, anchor=tk.W)
         self.status.pack(side=tk.BOTTOM, fill=tk.X)
         
-        tk.Button(panel, text="Undo", command=self.undo).pack(fill=tk.X, padx=5, pady=2)
-        tk.Button(panel, text="Redo", command=self.redo).pack(fill=tk.X, padx=5, pady=2)
+        tk.Button(panel, text="Undo", command=self.undo).pack(fill=tk.X, padx=10, pady=2)
+        tk.Button(panel, text="Redo", command=self.redo).pack(fill=tk.X, padx=10, pady=2)
 
-        tk.Button(panel, text="RESET TO ORIGINAL", command=self.reset_image).pack(fill=tk.X, padx=5, pady=5)
+        tk.Button(panel, text="RESET TO ORIGINAL", command=self.reset_image).pack(fill=tk.X, padx=10, pady=20)
     # ---------- Helpers ----------
 
     def check_image(self):
