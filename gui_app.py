@@ -60,6 +60,7 @@ class ImageEditorApp:
         self.create_menu()
         # Build the main user interface
         self.create_ui()
+        
 
     def create_menu(self):
         """
