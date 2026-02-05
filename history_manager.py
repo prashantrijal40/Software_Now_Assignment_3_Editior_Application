@@ -56,7 +56,7 @@ class HistoryManager:
             return self.undo_stack.pop()
         # If undo stack is empty, return current state unchanged
         return current
-
+    # Define the redo function to reapply an undone image state
     def redo(self, current):
         """
         Redo the last undone operation by restoring a previously undone state.
