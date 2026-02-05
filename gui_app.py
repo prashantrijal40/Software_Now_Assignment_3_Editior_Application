@@ -1,6 +1,6 @@
 """Simple Tkinter-based image editor GUI.
 
-This module provides `ImageEditorApp`, a lightweight Tkinter application
+This module provides `ImageEditorApp`, which is a lightweight Tkinter application
 that wraps `ImageProcessor` operations with a basic UI: open/save, undo/redo,
 and common image transformations (grayscale, blur, edge detection,
 brightness/contrast, rotate, flip, resize).
@@ -32,11 +32,11 @@ class ImageEditorApp:
         Args:
             root (tk.Tk): The Tkinter root window to attach the UI to.
         """
-        # Store the root window reference
+        # To store the root window reference
         self.root = root
-        # Set window title
+        # To set window title
         self.root.title("HIT137 Image Editor")
-        # Set initial window size (width x height)
+        # To set initial window size (width x height)
         self.root.geometry("1000x600")
 
         # Core components: image processor and undo/redo history
@@ -51,7 +51,7 @@ class ImageEditorApp:
         # This allows us to apply slider-based transformations without creating multiple history entries
         self.original_for_sliders = None
 
-        # Build the menu bar
+        # To build the menu bar
         self.create_menu()
         # Build the main user interface
         self.create_ui()
