@@ -157,7 +157,7 @@ class ImageEditorApp:
 
     def check_image(self):
         """
-        Verify that an image is loaded before performing operations.
+        Verifying that image is loaded before performing operations.
         
         Returns:
             bool: True if an image is loaded, False otherwise.
@@ -183,7 +183,7 @@ class ImageEditorApp:
         # Get image dimensions (height, width, channels)
         img_h, img_w = img.shape[:2]
         
-        # Calculate scaling factor to fit image in the available canvas area
+        # To fit image in the available canvas area scaling factor is calculated
         # Leave space for the control panel (approximately 200 pixels)
         max_width = self.canvas.master.winfo_width() - 220  # Account for panel width
         max_height = self.canvas.master.winfo_height() - 30  # Account for status bar
