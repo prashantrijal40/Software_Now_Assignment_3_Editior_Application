@@ -9,11 +9,12 @@ Attributes used in this module:
     ImageEditorApp: The main GUI application class from gui_app module.
     tk: tkinter library for creating the GUI window.
 """
-
+# Import the ImageEditorApp class from gui_app.py
+# Import the Tkinter library for creating GUI applications
 from gui_app import ImageEditorApp
 import tkinter as tk
 
-
+# Check if this file is run directly (not imported)
 if __name__ == "__main__":
     """Initialize and run the Image Editor application."""
     # To create the main tkinter window that will host the application
