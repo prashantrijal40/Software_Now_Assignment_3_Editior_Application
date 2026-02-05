@@ -48,7 +48,7 @@ class ImageProcessor:
         gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
         self.image = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
-    def blur(self, k):
+    def blur(self, k): #need to fix
         """Apply a Gaussian blur to the image.
 
         Args:
@@ -78,7 +78,7 @@ class ImageProcessor:
         """
         self.image = cv2.convertScaleAbs(self.image, alpha=1, beta=value)
 
-    def contrast(self, value):
+    def contrast(self, value): #need to fix this
         """Adjust image contrast by scaling pixel intensities.
 
         Args:
