@@ -120,7 +120,7 @@ class ImageEditorApp:
         panel.pack(side=tk.RIGHT, fill=tk.Y)
         panel.pack_propagate(False)  # Prevent frame from shrinking
         
-        tk.Label(panel, text="Editor", font=("Arial", 24, "bold"), bg="#000000", fg="white").pack(pady=15)
+        tk.Label(panel, text="Editor", font=("Arial", 24, "bold"), bg="#000000", fg="white").pack(pady=20)
         
 
         # Transformation buttons: Grayscale and Edge Detection
