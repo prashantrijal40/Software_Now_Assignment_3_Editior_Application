@@ -109,7 +109,7 @@ class ImageProcessor:
         elif angle == 270:
             self.image = cv2.rotate(self.image, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
-    # Flip the image either horizontally or vertically
+    # To flip the image either horizontally or vertically
     def flip(self, mode):
         """
         Flip the image horizontally or vertically.
