@@ -8,12 +8,16 @@ brightness/contrast, rotate, flip, resize).
 The GUI expects OpenCV-style BGR numpy arrays from `image_processor`.
 """
 
+# Import the Tkinter library for creating GUI applications
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
+# Import OpenCV library for image processing
 import cv2
 
+# Import ImageProcessor class for image processing operations
 from image_processor import ImageProcessor
+# Import HistoryManager class for managing undo and redo action
 from history_manager import HistoryManager
 
 
@@ -162,6 +166,7 @@ class ImageEditorApp:
         tk.Button(panel, text="RESET TO ORIGINAL", command=self.reset_image).pack(fill=tk.X, padx=10, pady=20)
     # ---------- Helpers ----------
 
+    # Method to check whether an image is loaded before editing
     def check_image(self):
         """
         Verifying that image is loaded before performing operations.
@@ -170,13 +175,14 @@ class ImageEditorApp:
             bool: True if an image is loaded, False otherwise.
                  Shows an error dialog if no image is loaded.
         """
-        # Check if the processor has a valid image loaded
+        # Check if there is no image in the ImageProcessor
         if self.processor.get_image() is None:
             # Show error message box to the user
             messagebox.showerror("Error", "Please open an image first to Edit!")
             return False
         return True
-
+    
+    # Method to check whether an image is loaded before editing
     def update_display(self):
         """
         Refresh the canvas and status bar to reflect the current image.
@@ -505,4 +511,4 @@ class ImageEditorApp:
         # Restore to original and apply current contrast value
         self.processor.set_image(self.original_for_sliders.copy())
         self.processor.contrast(float(v))
-        self.update_display()
+        self.update_display()   

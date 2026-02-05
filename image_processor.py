@@ -94,6 +94,7 @@ class ImageProcessor:
         """
         self.image = cv2.convertScaleAbs(self.image, alpha=value, beta=0)
 
+    # Rotate the image by a given angle (90, 180, or 270 degrees)
     def rotate(self, angle):
         """
         Rotate the image by one of the supported angles.
@@ -108,6 +109,7 @@ class ImageProcessor:
         elif angle == 270:
             self.image = cv2.rotate(self.image, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
+    # To flip the image either horizontally or vertically
     def flip(self, mode):
         """
         Flip the image horizontally or vertically.
@@ -116,10 +118,13 @@ class ImageProcessor:
             mode (str): 'h' for horizontal flip, any other value for vertical.
         """
         if mode == "h":
+            # Flip horizontally
             self.image = cv2.flip(self.image, 1)
         else:
+            # Flip vertically
             self.image = cv2.flip(self.image, 0)
 
+    # Resize the image by a scaling factor
     def resize(self, scale):
         """
         Resize the image by a scale factor.
