@@ -169,7 +169,7 @@ class ImageEditorApp:
         # Check if the processor has a valid image loaded
         if self.processor.get_image() is None:
             # Show error message box to the user
-            messagebox.showerror("Error", "Please open an image first!")
+            messagebox.showerror("Error", "Please open an image first to Edit!")
             return False
         return True
 
