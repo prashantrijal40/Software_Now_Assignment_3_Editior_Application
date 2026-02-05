@@ -28,7 +28,8 @@ class ImageProcessor:
         self.image = None
     # Method to set (assign) an image to the object
     def set_image(self, img):
-        """Set the current image.
+        """
+        Set the current image.
 
         Args:
             img (np.ndarray): Image array in BGR color order.
@@ -40,7 +41,8 @@ class ImageProcessor:
         return self.image
     # Method to convert the image to grayscale
     def grayscale(self):
-        """Convert the current image to grayscale and keep it in BGR shape.
+        """
+        Convert the current image to grayscale and keep it in BGR shape.
 
         The image is converted to a single-channel grayscale image and then
         back to BGR so downstream code can assume a 3-channel array.
@@ -49,7 +51,8 @@ class ImageProcessor:
         self.image = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
     def blur(self, k): #need to fix
-        """Apply a Gaussian blur to the image.
+        """
+        Apply a Gaussian blur to the image.
 
         Args:
             k (int): Kernel size. Will be coerced to an odd integer >= 1.
@@ -61,7 +64,8 @@ class ImageProcessor:
         self.image = cv2.GaussianBlur(self.image, (k, k), 0)
 
     def edge_detect(self):
-        """Detecting edges using the Canny algorithm and store as BGR image.
+        """
+        Detecting edges using the Canny algorithm and store as BGR image.
 
         The Canny output is a single-channel binary edge map; we convert it
         back to BGR so the processor consistently exposes 3-channel images.
@@ -71,7 +75,8 @@ class ImageProcessor:
         self.image = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR)
 
     def brightness(self, value):
-        """Adjust image brightness by adding `value` to pixel intensities.
+        """
+        Adjust image brightness by adding `value` to pixel intensities.
 
         Args:
             value (int): Value added to each pixel (positive -> brighter).
@@ -79,7 +84,8 @@ class ImageProcessor:
         self.image = cv2.convertScaleAbs(self.image, alpha=1, beta=value)
 
     def contrast(self, value): #need to fix this
-        """Adjust image contrast by scaling pixel intensities.
+        """
+        Adjust image contrast by scaling pixel intensities.
 
         Args:
             value (float): Multiplicative contrast factor (1.0 = no change).
@@ -87,7 +93,8 @@ class ImageProcessor:
         self.image = cv2.convertScaleAbs(self.image, alpha=value, beta=0)
 
     def rotate(self, angle):
-        """Rotate the image by one of the supported angles.
+        """
+        Rotate the image by one of the supported angles.
 
         Args:
             angle (int): Rotation angle in degrees. Supported values: 90, 180, 270.
@@ -100,7 +107,8 @@ class ImageProcessor:
             self.image = cv2.rotate(self.image, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     def flip(self, mode):
-        """Flip the image horizontally or vertically.
+        """
+        Flip the image horizontally or vertically.
 
         Args:
             mode (str): 'h' for horizontal flip, any other value for vertical.
@@ -111,7 +119,8 @@ class ImageProcessor:
             self.image = cv2.flip(self.image, 0)
 
     def resize(self, scale):
-        """Resize the image by a scale factor.
+        """
+        Resize the image by a scale factor.
 
         Args:
             scale (float): Multiplicative scale for width and height.
