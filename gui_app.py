@@ -115,16 +115,16 @@ class ImageEditorApp:
 
         # Right-side control panel containing transformation buttons and sliders
         # Use pack_propagate(False) to prevent the frame from shrinking below width=200
-        panel = tk.Frame(main, width=280, bg="#e0e0e0")
+        panel = tk.Frame(main, width=260, bg="#e0e0e0")
         panel.pack(side=tk.RIGHT, fill=tk.Y)
         panel.pack_propagate(False)  # Prevent frame from shrinking
         
-        tk.Label(panel, text="Editor", font=("Arial", 20, "bold"), bg="#4e50ab", fg="white").pack(pady=10)
+        tk.Label(panel, text="Editor", font=("Arial", 24, "bold"), bg="#000000", fg="white").pack(pady=15)
         
 
         # Transformation buttons: Grayscale and Edge Detection
-        tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X, padx=10, pady=10)
-        tk.Button(panel, text="Edge Detection", command=self.do_edge).pack(fill=tk.X, padx=10, pady=10)
+        tk.Button(panel, text="Grayscale", command=self.do_grayscale).pack(fill=tk.X, padx=10, pady=5)
+        tk.Button(panel, text="Edge Detection", command=self.do_edge).pack(fill=tk.X, padx=10, pady=5)
         
         # Blur slider contro
         # Range: 1 to 31 (must be odd for kernel size)
